@@ -1,24 +1,24 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
-import { InvoiceUseCase } from "./invoiceUseCase";
+import { ConfirmUseCase } from "./confirmUseCase";
 
-export class InvoiceController {
+export class ConfirmController {
   constructor() {
-    this.sendImage = this.sendImage.bind(this);
+    // this.sendImage = this.sendImage.bind(this);
   }
 
-  async sendImage(request: Request, response: Response): Promise<Response> {
+  async updateMeasure(request: Request, response: Response): Promise<Response> {
     const { body } = request;
-    const invoiceUseCase = container.resolve(InvoiceUseCase);
-    const validationError = invoiceUseCase.validateRequest(body);
+    const confirmUseCase = container.resolve(ConfirmUseCase);
+    const validationError = confirmUseCase.validateRequest(body);
 
     if (validationError) {
       return response.status(400).json(validationError);
     }
 
     try {
-      const data = await invoiceUseCase.sendGeminiImage();
-      
+      // const data = await confirmUseCase.sendGeminiImage();
+      let data = "teste"
       if (data === "DOUBLE_REPORT") {
         return response.status(409).json({ 
           error_code: "DOUBLE_REPORT",

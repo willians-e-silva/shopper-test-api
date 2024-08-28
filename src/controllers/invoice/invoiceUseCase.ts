@@ -14,7 +14,7 @@ export class InvoiceUseCase {
 
   validateRequest(body: any): { error_code: string, error_description: string } | null {
     const createError = (description: string) => ({
-      error_code: "DOUBLE_REPORTS",
+      error_code: "DOUBLE_REPORT",
       error_description: description
     });
 

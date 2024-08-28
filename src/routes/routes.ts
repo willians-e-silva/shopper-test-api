@@ -2,10 +2,12 @@
 import { Router } from 'express';
 
 // Routes Declarations
-import { InvoiceRoutes } from './invoice/invoice.routes';
+import { UploadRoutes } from './upload/upload.routes';
+import { ConfirmRoutes } from './confirm/confirm.routes';
 
 const router = Router();
 
-router.use('/upload',  InvoiceRoutes);
+router.use('/upload',  UploadRoutes);
+router.use('/confirm',  ConfirmRoutes);
 
 export { router };

@@ -1,9 +1,10 @@
 import {Router} from "express";
 import { InvoiceController } from "../../controllers/invoice/invoiceController";
 
-const InvoiceRoutes = Router();
+const UploadRoutes = Router();
+
 const invoiceController = new InvoiceController();
 
-InvoiceRoutes.post("/", invoiceController.sendImage);
+UploadRoutes.post("/", invoiceController.sendImage);
 
-export {InvoiceRoutes};
+export {UploadRoutes};
