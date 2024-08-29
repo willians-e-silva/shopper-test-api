@@ -1,18 +1,8 @@
-import { isBase64 } from '../../utils/isBase64';
+import { isBase64 } from '../../../utils/isBase64';
 
-export class InvoiceUseCase {
-
-  async sendGeminiImage(): Promise<any> {
-    try {
-        
-        return "image sent";
-
-    } catch (error) {
-        throw error;
-    }
-  }
-
+export class ValidateRequest {
   validateRequest(body: any): { error_code: string, error_description: string } | null {
+    console.log(body);
     const createError = (description: string) => ({
       error_code: "DOUBLE_REPORT",
       error_description: description

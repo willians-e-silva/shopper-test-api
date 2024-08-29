@@ -1,23 +1,39 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
-import { InvoiceUseCase } from "./invoiceUseCase";
+import { sendImage } from "./useCase/sendImage";
+import { ValidateRequest } from "./useCase/validateRequest";
+import { sendPrompt } from "./useCase/sendPrompt";
 
 export class InvoiceController {
   constructor() {
-    this.sendImage = this.sendImage.bind(this);
   }
 
   async sendImage(request: Request, response: Response): Promise<Response> {
     const { body } = request;
-    const invoiceUseCase = container.resolve(InvoiceUseCase);
-    const validationError = invoiceUseCase.validateRequest(body);
+    const sendGeminiImage = container.resolve(sendImage);
+    const sendGeminiPrompt = container.resolve(sendPrompt);
+    const validateBody = container.resolve(ValidateRequest);
 
-    if (validationError) {
-      return response.status(400).json(validationError);
+    let imagePath: string;
+    let isValid = validateBody.validateRequest(body);
+
+    if (isValid) {
+      return response.status(400).json(isValid);
+    }
+
+    try{
+      imagePath = await sendGeminiImage.sendImage(body.image, body.customer_code, body.date);
+    }catch(error){
+      return response.status(500).json({
+        error_code: "INTERNAL_SERVER_ERROR",
+        error_description: `Um erro inesperado ocorreu: ${(error as Error).message}`
+      });
     }
 
     try {
-      const data = await invoiceUseCase.sendGeminiImage();
+    console.log("teste")
+
+      const data = await sendGeminiPrompt.sendPrompt(body, imagePath);
       
       if (data === "DOUBLE_REPORT") {
         return response.status(409).json({ 
@@ -31,7 +47,7 @@ export class InvoiceController {
     } catch (error) {
       return response.status(500).json({
         error_code: "INTERNAL_SERVER_ERROR",
-        error_description: "Um erro inesperado ocorreu"
+        error_description: `Um erro inesperado ocorreu: ${(error as Error).message}`
       });
     }
   }
