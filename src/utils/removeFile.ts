@@ -5,5 +5,5 @@ import fs from 'fs';
  * @param filePath - The path where the file is located.
  */
 export function removeFile(filePath: string): void {
-  fs.unlinkSync("image.jpg");
+  fs.unlinkSync(filePath);
 }

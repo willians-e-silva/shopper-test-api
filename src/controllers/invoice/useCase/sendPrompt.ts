@@ -1,19 +1,23 @@
 import { GoogleGenerativeAI }  from "@google/generative-ai";
-
+import { injectable } from "tsyringe";
+import dotenv from 'dotenv';
+dotenv.config();
+@injectable()
 export class sendPrompt {
-  private genAI: GoogleGenerativeAI;
-  private model: any;
 
   constructor() {
-    this.genAI = new GoogleGenerativeAI("AIzaSyCdGNM-nk3Ia6QNsWR_BmNVXNwXoceenBY");
-    this.model = this.genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
   }
 
-  async sendPrompt(body: any, imagePath: string): Promise<any> {
+  async sendPrompt(imagePath: string, type: string): Promise<any> {
+    
+    let genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY || "");
+    let model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
     try {
-      const prompt = `com base na imagem enviada, me diga oque você vê? ${imagePath}`;
-      
-      const result = await this.model.generateContent([prompt]);
+      let prompt = `voce consegue me dizer o numero registrado nesse relogio que contabiliza a conta de ${type == "WATER" ? "agua" : "gás"}?`;
+      const result = await model.generateContent(prompt)
+      ;
       return result
     } catch (error) {
         throw error;

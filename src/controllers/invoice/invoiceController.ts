@@ -33,7 +33,7 @@ export class InvoiceController {
     try {
     console.log("teste")
 
-      const data = await sendGeminiPrompt.sendPrompt(body, imagePath);
+      const data = await sendGeminiPrompt.sendPrompt(imagePath, body.measure_type);
       
       if (data === "DOUBLE_REPORT") {
         return response.status(409).json({ 

@@ -1,5 +1,7 @@
 import { isBase64 } from '../../../utils/isBase64';
+import { injectable } from "tsyringe";
 
+@injectable()
 export class ValidateRequest {
   validateRequest(body: any): { error_code: string, error_description: string } | null {
     console.log(body);

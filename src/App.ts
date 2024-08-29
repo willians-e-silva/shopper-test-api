@@ -1,6 +1,12 @@
 import express from 'express';
 import { router } from './routes/routes';
+import { container } from "tsyringe";
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GoogleAIFileManager } from "@google/generative-ai/server";
 
+// Registre as dependências
+container.register("GoogleGenerativeAI", { useClass: GoogleGenerativeAI });
+container.register("GoogleAIFileManager", { useClass: GoogleAIFileManager });
 
 export class App {
   public express: express.Application;
