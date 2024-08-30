@@ -57,4 +57,22 @@ export class ValidateUseCase {
     return null;
   }
 
+    /**
+   * Checks if measure already exists in database.
+   * @param type - The type of the measurement, can be WATER or GAS.
+   * @returns {(null | Error)} - Returns null if body matchs the required format, otherwise throws an error.
+   */
+    validateListRequest(type: string): { error_code: string, error_description: string } | null {
+      const createError = (description: string) => ({
+        error_code: "INVALID_TYPE",
+        error_description: description
+      });
+  
+      if (type !== "WATER" && type !== "GAS") {
+        return createError(`ipo de medição não permitida`);
+      }
+  
+      return null;
+    }
+
 }

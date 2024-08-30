@@ -142,4 +142,30 @@ export class MeasureUseCase {
             throw error;
         }
     }
+
+    /**
+     * Get all measures by the customer id.
+     * @param customer - The customer code of the measure.
+     * @param type - The type of the measurement, GAS or WATER.
+     * @returns {Array} - Returns all measures realated to the customer.
+     */
+    async getAllMeasuresByCustomer(customer: number, type?: string) {
+        try {
+            let where: any = {
+                customer_id: customer
+            };
+
+            if (type !== undefined) {
+                where.measure_type = type;
+            }
+
+            let measures = await prisma.measurements.findMany({
+                where: where
+            });
+
+            return measures;
+        } catch (error) {
+            throw error;
+        }
+    }
 }
