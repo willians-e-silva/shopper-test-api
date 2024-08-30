@@ -2,12 +2,22 @@ import 'reflect-metadata';
 import { App } from './App';
 import { config } from './config/index';
 
-const app = new App();
+async function startServer() {
+  const app = new App();
 
-app.init().then(() => {
-  app.express.listen(config.port, () => {
-    console.info(`Server is running on port: ${config.port}`);
-  }).on('error', (error) => {
-    console.error('Could not run server due to error: ', error.message);
-  });
-});
+  try {
+    await app.init();
+    
+    app.express.listen(config.port, () => {
+      console.info(`Server is running on port: ${config.port}`);
+    }).on('error', handleError);
+  } catch (error) {
+    throw error;
+  }
+}
+
+function handleError(error: Error) {
+  console.error('Could not run server due to error: ', error.message);
+}
+
+startServer();

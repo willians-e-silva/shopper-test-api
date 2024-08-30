@@ -13,6 +13,13 @@ export class UploadController {
   constructor() {
   }
 
+  /**
+   * Checks body | Uploads a image to vision | Checks if customer or measure already exists in the database and save it.
+   * @param {Request} request - The request containing the body with measure details.
+   * @param {Response} response - The response object to send the result.
+   * @returns {Promise<Response>} - Returns a response with the result of the prompt with the image linked.
+   * @throws {Error} - Throws an error if the body does not match | Throws an error if already measured | Throws an error if anything goes wrong.
+   */
   async upload(request: Request, response: Response): Promise<Response> {
     const { body } = request;
     const validateBody = container.resolve(ValidateUseCase);

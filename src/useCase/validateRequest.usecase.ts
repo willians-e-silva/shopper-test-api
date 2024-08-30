@@ -2,6 +2,12 @@ import { isBase64 } from '@utils/isBase64';
 import { isUuid } from '@utils/isUuid';
 
 export class ValidateUseCase {
+
+  /**
+   * Checks if measure already exists in database.
+   * @param body - The body of the request .
+   * @returns {(null | Error)} - Returns null if body matchs the required format, otherwise throws an error.
+   */
   validateUploadRequest(body: any): { error_code: string, error_description: string } | null {
     const createError = (description: string) => ({
       error_code: "INVALID_DATA",
@@ -28,6 +34,11 @@ export class ValidateUseCase {
     return null;
   }
 
+  /**
+   * Checks if measure already exists in database.
+   * @param body - The body of the request .
+   * @returns {(null | Error)} - Returns null if body matchs the required format, otherwise throws an error.
+   */
   validateConfirmRequest(body: any): { error_code: string, error_description: string } | null {
     const createError = (description: string) => ({
       error_code: "INVALID_DATA",
