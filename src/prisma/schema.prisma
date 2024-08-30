@@ -16,10 +16,11 @@ model customers {
 model measurements {
   id               Int      @id @default(autoincrement())
   measure_uuid     String   @db.VarChar(36)
-  customer_id      Int
+  customer_id      Int      @db.Int
   measure_type     String   @db.VarChar(255)
   measure_datetime DateTime @db.Date
-  image_url        Bytes    @db.LongBlob
+  measure_value    Int      @db.Int
+  image_url        String   @db.VarChar(255)
   has_confirmed    Boolean  @default(false)
 
   customer customers @relation(fields: [customer_id], references: [id])

@@ -11,7 +11,7 @@ export class GeminiApiService {
     private apiKey: string;
 
     constructor() {
-        this.apiKey = process.env.GOOGLE_API_KEY || '';
+        this.apiKey = process.env.GEMINI_API_KEY || '';
     }
 
     // SEND IMAGE TO GEMINI API
@@ -59,8 +59,10 @@ export class GeminiApiService {
         const result = await model.generateContent({
         contents: [{ role: "user", parts }]
         });
+        const measure = result?.response?.candidates?.[0]?.content?.parts?.[0]?.text;
+        let measureFiltered = measure?.match(/\d+/g)?.join('') || '';
 
-        return result?.response?.candidates?.[0]?.content?.parts?.[0]?.text;
+        return Number(measureFiltered);
 
     } catch (error) {
         throw error;
