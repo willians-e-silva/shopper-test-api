@@ -16,10 +16,14 @@ export class UploadController {
   /**
    * Checks body | Uploads a image to vision | Checks if customer or measure already exists in the database and save it.
    * @param {Request} request - The request containing the body with measure details.
-   * @param {Response} response - The response object to send the result.
+   * @param {string} request.body.customer_code - The customer code of th measure.
+   * @param {number} request.body.image - The image to be measured in base64.
+   * @param {string} request.body.measure_datetime - The datetime of the measure.
+   * @param {number} request.body.measure_type - The type of the measurement, GAS or WATER.
    * @returns {Promise<Response>} - Returns a response with the result of the prompt with the image linked.
    * @throws {Error} - Throws an error if the body does not match | Throws an error if already measured | Throws an error if anything goes wrong.
    */
+  
   async upload(request: Request, response: Response): Promise<Response> {
     const { body } = request;
     const validateBody = container.resolve(ValidateUseCase);
@@ -29,7 +33,12 @@ export class UploadController {
     const customerUseCase = new CustomerUseCase();
     const measureUseCase = new MeasureUseCase();
 
-    const customerCode = body.customer_code;
+    const measure = {
+      customer: body.customer_code,
+      image64: body.image,
+      datetime: body.measure_datetime,
+      type: body.measure_type
+    }
     
     let data: any;
     let imageURI: string;
@@ -43,7 +52,7 @@ export class UploadController {
       }
 
       // VERIFY IF REPORT ALREADY EXISTS IN THIS MONTH
-      let isDoubleReport = await measureUseCase.checkDoubleMeasure(customerCode, body.measure_datetime, body.measure_type);
+      let isDoubleReport = await measureUseCase.checkDoubleMeasure(measure.customer, measure.datetime, measure.type);
       if (isDoubleReport) {
         return response.status(409).json({ 
           error_code: "DOUBLE_REPORT",
@@ -52,19 +61,19 @@ export class UploadController {
       }
 
       // SEND IMAGE TO GEMINI API
-      imageURI = await geminiApi.sendImage(body.image, customerCode, body.date);
+      imageURI = await geminiApi.sendImage(measure.image64, measure.customer, measure.datetime);
 
       // SEND PROMPT TO GEMINI API
-      measureNumber = await geminiApi.sendPrompt(imageURI, body.measure_type);
+      measureNumber = await geminiApi.sendPrompt(imageURI, measure.type);
       let measureUuid = uuidv4();
 
-      let customerId = await customerUseCase.checkCustomerExists(customerCode);
+      let customerId = await customerUseCase.checkCustomerExists(measure.customer);
 
       if (customerId == null) {
-        customerId = await customerUseCase.saveCustomer(customerCode);
-        await measureUseCase.saveMeasure(customerId, body.measure_datetime, measureUuid, body.measure_type,  measureNumber, imageURI );
+        customerId = await customerUseCase.saveCustomer(measure.customer);
+        await measureUseCase.saveMeasure(customerId, measure.datetime, measureUuid, measure.type,  measureNumber, imageURI );
       } else {
-        await measureUseCase.saveMeasure(customerId, body.measure_datetime, measureUuid, body.measure_type,  measureNumber, imageURI );
+        await measureUseCase.saveMeasure(customerId, measure.datetime, measureUuid, measure.type,  measureNumber, imageURI );
       }
 
       data = {

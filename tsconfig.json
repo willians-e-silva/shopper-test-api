@@ -15,6 +15,6 @@
       "@useCase/*": ["src/useCase/*"]
     }
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "node_modules/.prisma/client"],
   "exclude": ["node_modules", "**/*.spec.ts"]
 }
