@@ -3,7 +3,7 @@ import { isBase64 } from '@utils/isBase64';
 export class ValidateUseCase {
   validateUploadRequest(body: any): { error_code: string, error_description: string } | null {
     const createError = (description: string) => ({
-      error_code: "DOUBLE_REPORT",
+      error_code: "INVALID_DATA",
       error_description: description
     });
 

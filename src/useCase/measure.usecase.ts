@@ -2,10 +2,10 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-export class UploadUseCase {
+export class MeasureUseCase {
     
     // VERIFY IF REPORT ALREADY EXISTS IN THIS MONTH, WITH THIS TYPE
-    async checkDoubleReport(customer: string, datetime: string, measure_type: string) {
+    async checkDoubleMeasure(customer: string, datetime: string, measure_type: string) {
         try {
             const date = new Date(datetime);
             const month = date.getMonth() + 1;
@@ -31,34 +31,6 @@ export class UploadUseCase {
                 }
             });
             return (measures !== null);
-        } catch (error) {
-            throw error;
-        }
-    }
-
-    // VERIFY IF CUSTOMER EXISTS
-    async checkCustomerExists(customer: string) {
-        try {
-            let customerExists = await prisma.customers.findFirst({
-                where: {
-                    customer_code: customer
-                }
-            });
-            return (customerExists !== null? customerExists.id : null);
-        } catch (error) {
-            throw error;
-        }
-    }
-    
-    // SAVE NEW CUSTOMER
-    async saveCustomer(customer: string) {
-        try {
-            const newCustomer = await prisma.customers.create({
-                data: {
-                    customer_code: customer
-                }
-            });
-            return newCustomer.id; 
         } catch (error) {
             throw error;
         }

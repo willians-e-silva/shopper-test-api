@@ -1,11 +1,14 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 import { ValidateUseCase } from "@useCase/validateRequest.usecase";
-import { GeminiApiService } from "../../services/geminiApi";
-import { UploadUseCase } from "@useCase/upload.usecase";
+import { GeminiApiService } from "@services/geminiApi";
+
+import { UploadUseCase } from "@useCase/customer.usecase";
+import { MeasureUseCase } from "@useCase/measure.usecase";
+
 import { v4 as uuidv4 } from 'uuid';
 
-export class InvoiceController {
+export class UploadController {
   constructor() {
   }
 
@@ -14,7 +17,10 @@ export class InvoiceController {
     const validateBody = container.resolve(ValidateUseCase);
 
     const geminiApi = new GeminiApiService();
+
     const uploadUseCase = new UploadUseCase();
+    const measureUseCase = new MeasureUseCase();
+
     const customerCode = body.customer_code;
     
     let data: any;
@@ -28,7 +34,7 @@ export class InvoiceController {
     }
 
     // VERIFY IF REPORT ALREADY EXISTS IN THIS MONTH
-    let isDoubleReport = await uploadUseCase.checkDoubleReport(customerCode, body.measure_datetime, body.measure_type);
+    let isDoubleReport = await measureUseCase.checkDoubleMeasure(customerCode, body.measure_datetime, body.measure_type);
     if (isDoubleReport) {
       return response.status(409).json({ 
         error_code: "DOUBLE_REPORT",
@@ -66,9 +72,9 @@ export class InvoiceController {
 
       if (customerId == null) {
         customerId = await uploadUseCase.saveCustomer(customerCode);
-        await uploadUseCase.saveMeasure(customerId, body.measure_datetime, measureUuid, body.measure_type,  measureNumber, imageURI );
+        await measureUseCase.saveMeasure(customerId, body.measure_datetime, measureUuid, body.measure_type,  measureNumber, imageURI );
       } else {
-        await uploadUseCase.saveMeasure(customerId, body.measure_datetime, measureUuid, body.measure_type,  measureNumber, imageURI );
+        await measureUseCase.saveMeasure(customerId, body.measure_datetime, measureUuid, body.measure_type,  measureNumber, imageURI );
       }
     } catch (error) {
       return response.status(500).json({

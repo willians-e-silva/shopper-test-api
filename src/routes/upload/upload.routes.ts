@@ -1,10 +1,10 @@
-import {Router} from "express";
-import { InvoiceController } from "@controllers/upload/uploadController";
+import { Router } from "express";
+import { UploadController } from "@controllers/upload/uploadController";
 
 const UploadRoutes = Router();
 
-const invoiceController = new InvoiceController();
+const uploadController = new UploadController();
 
-UploadRoutes.post("/", invoiceController.upload);
+UploadRoutes.post("/", uploadController.upload);
 
-export {UploadRoutes};
+export { UploadRoutes };
