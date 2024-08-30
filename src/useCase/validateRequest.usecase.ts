@@ -46,11 +46,11 @@ export class ValidateUseCase {
     });
 
     if (isUuid(body.measure_uuid) === false) {
-      return createError(`Parametro inválido, 'customer_code' deve ser Uuid, recebido: ${typeof(body.customer_code)}`);
+      return createError(`Parametro inválido, 'measure_uuid' deve ser Uuid, recebido: ${typeof(body.customer_code)}`);
     }
 
     if (typeof(body.confirmed_value) !== 'number') {
-      return createError(`Parametro inválido, 'customer_code' deve ser interger, recebido: ${typeof(body.confirmed_value)}`);
+      return createError(`Parametro inválido, 'confirmed_value' deve ser interger, recebido: ${typeof(body.confirmed_value)}`);
     }
 
 
