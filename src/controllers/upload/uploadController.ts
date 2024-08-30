@@ -21,13 +21,13 @@ export class InvoiceController {
     if (isValid) {
       return response.status(400).json(isValid);
     }
-
-    if (uploadUseCase.checkDoubleReport(body.customer_code, body.date, body.measure_type)) {
-      return response.status(409).json({ 
-        error_code: "DOUBLE_REPORT",
-        error_description: "Leitura do mês já realizada" 
-      });
-    }
+    uploadUseCase.checkDoubleReport(body.customer_code, body.date, body.measure_type)
+    // if (uploadUseCase.checkDoubleReport(body.customer_code, body.date, body.measure_type)) {
+    //   return response.status(409).json({ 
+    //     error_code: "DOUBLE_REPORT",
+    //     error_description: "Leitura do mês já realizada" 
+    //   });
+    // }
 
     // SEND IMAGE TO GEMINI API
     try{
