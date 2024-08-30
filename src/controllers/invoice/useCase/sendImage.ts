@@ -15,7 +15,8 @@ export class sendImage {
   async sendImage(imageBase64: string, customer_code: number, date: string): Promise<any> {
     const displayName = `${customer_code}_${date}`;
     const imagePath = `${displayName}.jpg`;
-    const fileManager = new GoogleAIFileManager(process.env.GOOGLE_API_KEY || "");
+    const apiKey = process.env.GEMINI_API_KEY || '';
+    const fileManager = new GoogleAIFileManager(apiKey);
 
     base64ToImage(imageBase64, imagePath);
       

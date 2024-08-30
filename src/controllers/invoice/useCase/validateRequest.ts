@@ -4,7 +4,6 @@ import { injectable } from "tsyringe";
 @injectable()
 export class ValidateRequest {
   validateRequest(body: any): { error_code: string, error_description: string } | null {
-    console.log(body);
     const createError = (description: string) => ({
       error_code: "DOUBLE_REPORT",
       error_description: description
