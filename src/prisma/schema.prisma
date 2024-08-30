@@ -8,9 +8,11 @@ datasource db {
 }
 
 model customer_measurement {
-  id       Int      @id @default(autoincrement())
-  customer String   @db.VarChar(255)
-  type     String   @db.VarChar(255)
-  date     DateTime @db.Date
-  image    Bytes    @db.LongBlob
+  id                  Int       @id @default(autoincrement())
+  customer_code       String    @db.VarChar(255)
+  measure_type        String    @db.VarChar(255)
+  measure_datetime    DateTime  @db.Date
+  image_url           Bytes     @db.LongBlob
+  measure_uuid        String    @db.VarChar(36)
+  has_confirmed       Boolean   @default(false)
 }

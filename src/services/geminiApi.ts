@@ -11,7 +11,7 @@ export class GeminiApiService {
     private apiKey: string;
 
     constructor() {
-        this.apiKey = process.env.GEMINI_API_KEY || '';
+        this.apiKey = process.env.GOOGLE_API_KEY || '';
     }
 
     // SEND IMAGE TO GEMINI API
@@ -49,7 +49,7 @@ export class GeminiApiService {
             }
         };
 
-        const prompt = `Is this a ${type} meter? Can you read the main numbers on it? Answer using only one of these options: meter not identified (if it's not a ${type} meter) measure not visible (if it is a water meter but the numbers can't be read) measured_number: {number} (if it is a ${type} meter and you can read the numbers - replace {number} with the reading)`;
+        const prompt = `return the main number only, in this ${type} meter?, return in a plain text, withou markdown or decoration`;
 
         const parts = [
             { text: prompt }, imgPart
