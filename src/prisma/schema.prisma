@@ -7,12 +7,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model customer_measurement {
-  id                  Int       @id @default(autoincrement())
-  customer_code       String    @db.VarChar(255)
-  measure_type        String    @db.VarChar(255)
-  measure_datetime    DateTime  @db.Date
-  image_url           Bytes     @db.LongBlob
-  measure_uuid        String    @db.VarChar(36)
-  has_confirmed       Boolean   @default(false)
+model customers {
+  id            Int     @id @default(autoincrement())
+  customer_code String  @db.VarChar(255)
+  measurements  measurements[]
+}
+
+model measurements {
+  id               Int      @id @default(autoincrement())
+  measure_uuid     String   @db.VarChar(36)
+  customer_id      Int
+  measure_type     String   @db.VarChar(255)
+  measure_datetime DateTime @db.Date
+  image_url        Bytes    @db.LongBlob
+  has_confirmed    Boolean  @default(false)
+
+  customer customers @relation(fields: [customer_id], references: [id])
 }
