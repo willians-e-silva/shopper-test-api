@@ -2,7 +2,7 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-export class UploadUseCase {
+export class CustomerUseCase {
     
     // VERIFY IF REPORT ALREADY EXISTS IN THIS MONTH, WITH THIS TYPE
     async checkDoubleMeasure(customer: string, datetime: string, measure_type: string) {

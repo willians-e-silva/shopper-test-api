@@ -1,12 +1,44 @@
 import { Request, Response } from "express";
-import { UploadUseCase } from "@useCase/customer.usecase";
+import { MeasureUseCase } from "@useCase/measure.usecase";
+import { ValidateUseCase } from "@useCase/validateRequest.usecase";
 
 export class ConfirmController {
   constructor() {
   }
   async updateMeasure(request: Request, response: Response): Promise<Response> {
     const { body } = request;
-    // const confirmUseCase = container.resolve(ConfirmUseCase);
+
+    const measureUseCase = new MeasureUseCase();
+    const validateBody = new ValidateUseCase();
+
+    const measure = {
+      uuid: body.measure_uuid,
+      value: body.measure_value
+    }
+
+    let isValid = validateBody.validateConfirmRequest(body);
+    if (isValid) {
+      return response.status(400).json(isValid);
+    }
+    
+    let measureExist = await measureUseCase.checkMeasureExist(measure.uuid);
+    if (!measureExist) {
+      return response.status(404).json({
+        error_code: "MEASURE_NOT_FOUND",
+        error_description: "Leitura não encontrada"
+      });
+    }
+
+    let confirmationDuplicate = await measureUseCase.checkMeasurementConfirmation(measure.uuid);
+    if (confirmationDuplicate) {
+      return response.status(404).json({
+        error_code: "CONFIRMATION_DUPLICATE",
+        error_description: "Leitura do mês já realizada"
+      });
+    }
+
+    await measureUseCase.saveMeasureConfirmation(measure.uuid, measure.value);
+    
     return response.status(200).json({ success: "true" });
   }
 }

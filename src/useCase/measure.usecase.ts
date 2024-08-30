@@ -55,4 +55,58 @@ export class MeasureUseCase {
             throw error;
         }
     }
+
+    async checkMeasureExist(measure_uuid: string) {
+        try {
+            let measure = await prisma.measurements.findFirst({
+                where: {
+                    measure_uuid: measure_uuid,
+                }
+            });
+            
+            return (measure !== null);
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async checkMeasurementConfirmation (measure_uuid: string) {
+        try {
+            let measure = await prisma.measurements.findFirst({
+                where: {
+                    measure_uuid: measure_uuid,
+                }
+            });
+            
+            return (measure?.has_confirmed);
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async saveMeasureConfirmation(measure_uuid: string, measure_value: number) {
+        try {
+            let measure = await prisma.measurements.findFirst({
+                where: {
+                    measure_uuid: measure_uuid,
+                }
+            });
+    
+            if (!measure) {
+                throw new Error("Measure not found");
+            }
+    
+            await prisma.measurements.update({
+                where: {
+                    id: measure.id
+                },
+                data: {
+                    has_confirmed: true,
+                    measure_value: measure_value
+                }
+            });
+        } catch (error) {
+            throw error;
+        }
+    }
 }

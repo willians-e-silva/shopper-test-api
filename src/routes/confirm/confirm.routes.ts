@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { ConfirmController } from "../../controllers/confirm/confirmController";
+import { ConfirmController } from "@controllers/confirm/confirmController";
 
 const ConfirmRoutes = Router();
 
