@@ -1,9 +1,7 @@
-import { isBase64 } from '../../../utils/isBase64';
-import { injectable } from "tsyringe";
+import { isBase64 } from '@utils/isBase64';
 
-@injectable()
-export class ValidateRequest {
-  validateRequest(body: any): { error_code: string, error_description: string } | null {
+export class ValidateUseCase {
+  validateUploadRequest(body: any): { error_code: string, error_description: string } | null {
     const createError = (description: string) => ({
       error_code: "DOUBLE_REPORT",
       error_description: description
