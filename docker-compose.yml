@@ -4,27 +4,24 @@ services:
   db:
     image: mysql:latest
     environment:
-      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${DB_DATABASE}
-      MYSQL_USER: ${DB_USER}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
+      MYSQL_DATABASE: "${DB_DATABASE}"
+      MYSQL_USER: "${DB_USER}"
+      MYSQL_PASSWORD: "${DB_PASSWORD}"
     volumes:
       - db_data:/var/lib/mysql
       # - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - "${DB_PORT}:${DB_PORT}"
 
-  # app:
-  #   build: .
-  #   ports:
-  #     - "8081:8080"
-  #   depends_on:
-  #     - db
-  #   environment:
-  #     - DB_HOST=db
-  #     - DB_USER=root
-  #     - DB_PASSWORD=example
-  #     - DB_NAME=mydatabase
+  app:
+    build: .
+    ports:
+      - "4000:4000"
+    depends_on:
+      - db
+    env_file:
+      - .env
 
 volumes:
   db_data:

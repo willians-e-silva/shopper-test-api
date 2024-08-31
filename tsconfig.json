@@ -13,7 +13,9 @@
       "@config/*": ["src/config/*"],
       "@services/*": ["src/services/*"],
       "@useCase/*": ["src/useCase/*"]
-    }
+    },
+    "outDir": "./dist",
+    "rootDir": "./src"
   },
   "include": ["src/**/*", "node_modules/.prisma/client"],
   "exclude": ["node_modules", "**/*.spec.ts"]

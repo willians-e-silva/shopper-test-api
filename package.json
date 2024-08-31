@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "dist/Server.js",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && tsc-alias",
     "start": "node -r tsconfig-paths/register dist/Server.js",
     "dev": "nodemon --exec ts-node -r tsconfig-paths/register src/Server.ts"
   },
@@ -17,7 +17,6 @@
     "nodemon": "^3.1.4",
     "prisma": "^5.19.0",
     "ts-node": "^10.9.2",
-    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.5.4"
   },
   "dependencies": {
@@ -28,6 +27,8 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "reflect-metadata": "^0.2.2",
+    "tsc-alias": "^1.8.10",
+    "tsconfig-paths": "^4.2.0",
     "tsyringe": "^4.8.0",
     "uuid": "^10.0.0"
   },
