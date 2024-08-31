@@ -69,7 +69,7 @@ export class ValidateUseCase {
       });
   
       if (type !== "WATER" && type !== "GAS") {
-        return createError(`ipo de medição não permitida`);
+        return createError(`tipo de medição não permitida`);
       }
   
       return null;
