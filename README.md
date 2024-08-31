@@ -43,5 +43,5 @@ Acabei me empolgando um pouco demais com o projeto, me diverti com o desafio pro
 
 **OBS:** Desde já peço perdão por não entregar os adicionais do projeto, como trabalho em dia de semana tive poucas horas por dia para focar 100% no desafio.
 
-**OBS 2:** Notei que na segunda rota, ao não encontrar a leitura, a mensagem de erro `description` está duplicada com a de leitura confirmada: sendo "Leitura do mês já realizada". Alterei no código para: `leitura não encontrada`.
+**OBS 2:** Notei que na segunda rota, ao não encontrar a leitura, a mensagem de `error_description` está duplicada com a de leitura confirmada: sendo "Leitura do mês já realizada". Alterei no código para: `leitura não encontrada`.
 
