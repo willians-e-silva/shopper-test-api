@@ -35,7 +35,7 @@ docker system prune -a -f
 ### A API Não Funcionou!!!
 
 - Tenha certeza de estar passando a API Key correta com as permissões necessárias.
-- Tenha certeza que sua key possui privilégios para usar o modelo: [`emini-1.5-pro-latest`](command:_github.copilot.openSymbolFromReferences?%5B%22emini-1.5-pro-latest%22%2C%5B%7B%22uri%22%3A%7B%22%24mid%22%3A1%2C%22fsPath%22%3A%22%2Fhome%2Fwillians%2FDocuments%2FProjects%2Fshopper-test-api%2FREADME.me%22%2C%22external%22%3A%22file%3A%2F%2F%2Fhome%2Fwillians%2FDocuments%2FProjects%2Fshopper-test-api%2FREADME.me%22%2C%22path%22%3A%22%2Fhome%2Fwillians%2FDocuments%2FProjects%2Fshopper-test-api%2FREADME.me%22%2C%22scheme%22%3A%22file%22%7D%2C%22pos%22%3A%7B%22line%22%3A23%2C%22character%22%3A65%7D%7D%5D%5D "Go to definition") e fazer requisições para o [`GoogleAIFileManager`](command:_github.copilot.openSymbolFromReferences?%5B%22GoogleAIFileManager%22%2C%5B%7B%22uri%22%3A%7B%22%24mid%22%3A1%2C%22fsPath%22%3A%22%2Fhome%2Fwillians%2FDocuments%2FProjects%2Fshopper-test-api%2FREADME.me%22%2C%22external%22%3A%22file%3A%2F%2F%2Fhome%2Fwillians%2FDocuments%2FProjects%2Fshopper-test-api%2FREADME.me%22%2C%22path%22%3A%22%2Fhome%2Fwillians%2FDocuments%2FProjects%2Fshopper-test-api%2FREADME.me%22%2C%22scheme%22%3A%22file%22%7D%2C%22pos%22%3A%7B%22line%22%3A23%2C%22character%22%3A113%7D%7D%5D%5D "Go to definition").
+- Tenha certeza que sua key possui privilégios para usar o modelo: [`emini-1.5-pro-latest`] e fazer requisições para o [`GoogleAIFileManager`]
 
 ## Considerações Finais
 
